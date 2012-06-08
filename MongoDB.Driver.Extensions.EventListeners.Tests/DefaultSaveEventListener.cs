@@ -9,7 +9,7 @@ namespace MongoDB.Driver.Extensions.EventListeners.Tests
     {
         public void OnSave(ISaveEventArgs @event)
         {
-            if(@event.Entity != null && @event.ContextData != null)
+            if(@event.Entity != null && @event.Data != null)
             {
                 var entity = @event.Entity as IEntity;
                 if(entity != null)
@@ -23,7 +23,7 @@ namespace MongoDB.Driver.Extensions.EventListeners.Tests
 
                     var now = DateTime.UtcNow;
 
-                    var contextData = @event.ContextData as CurrentContextData;
+                    var contextData = @event.Data as CurrentContextData;
                     if(contextData != null)
                     {
                         if (isTransient)

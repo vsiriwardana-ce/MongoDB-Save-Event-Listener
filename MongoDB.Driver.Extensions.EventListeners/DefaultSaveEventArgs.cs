@@ -4,12 +4,12 @@
     {
         public object Entity { get; set; }
 
-        public object ContextData { get; set; }
+        public object Data { get; set; }
 
         public DefaultSaveEventArgs(object entity, object contextData)
         {
             Entity = entity;
-            ContextData = contextData;
+            Data = contextData;
         }
     }
 }

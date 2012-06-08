@@ -5,6 +5,6 @@ namespace MongoDB.Driver.Extensions.EventListeners
     {
         object Entity { get; set; }
 
-        object ContextData { get; set; }
+        object Data { get; set; }
     }
 }

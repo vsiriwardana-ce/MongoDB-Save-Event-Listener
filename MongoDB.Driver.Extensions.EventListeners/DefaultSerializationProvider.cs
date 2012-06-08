@@ -15,7 +15,7 @@ namespace MongoDB.Driver.Extensions.EventListeners
         public IBsonSerializer GetSerializer(Type type)
         {
             return
-                new DefaultSerializer(new DefaultSerializerOptions(new BsonDefaultSerializer().GetSerializer(type),
+                new CustomSerializer(new DefaultSerializerOptions(new BsonDefaultSerializer().GetSerializer(type),
                                                                    ContextData));
         }
     }

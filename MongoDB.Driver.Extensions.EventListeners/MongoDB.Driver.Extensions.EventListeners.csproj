@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultSerializationProvider.cs" />
-    <Compile Include="DefaultSerializer.cs" />
+    <Compile Include="CustomSerializer.cs" />
     <Compile Include="DefaultSerializerOptions.cs" />
     <Compile Include="IEventContext.cs" />
     <Compile Include="ISaveEventArgs.cs" />
@@ -59,6 +59,7 @@
     <Compile Include="DefaultSaveEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

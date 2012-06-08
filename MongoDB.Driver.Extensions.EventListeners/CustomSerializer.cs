@@ -4,11 +4,11 @@ using MongoDB.Bson.Serialization;
 
 namespace MongoDB.Driver.Extensions.EventListeners
 {
-    public sealed class DefaultSerializer : IBsonSerializer
+    public sealed class CustomSerializer : IBsonSerializer
     {
         private readonly DefaultSerializerOptions _options;
 
-        public DefaultSerializer(DefaultSerializerOptions options)
+        public CustomSerializer(DefaultSerializerOptions options)
         {
             _options = options;
         }
