@@ -1,6 +1,8 @@
-﻿namespace MongoDB.Driver.Extensions.EventListeners
+﻿using System;
+
+namespace MongoDB.Driver.Extensions.EventListeners
 {
-    public class DefaultSaveEventArgs : ISaveEventArgs
+    internal class DefaultSaveEventArgs : EventArgs, ISaveEventArgs
     {
         public object Entity { get; set; }
 

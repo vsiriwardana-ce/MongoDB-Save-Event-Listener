@@ -13,9 +13,26 @@ namespace MongoDB.Driver.Extensions.EventListeners
             _options = options;
         }
 
+        public void Serialize(BsonWriter bsonWriter, Type nominalType, object value, IBsonSerializationOptions options)
+        {
+            if (_options.Context != null)
+            {
+                if (_options.Context.SaveEventListener != null)
+                {
+                    _options.Context.SaveEventListener.OnSave(new DefaultSaveEventArgs(value, this._options.Context.Data));
+                }
+            }
+            _options.Serializer.Serialize(bsonWriter, nominalType, value, options);
+        }
+
         public object Deserialize(BsonReader bsonReader, Type nominalType, IBsonSerializationOptions options)
         {
             return Deserialize(bsonReader, nominalType, nominalType, options);
+        }
+
+        public object Deserialize(BsonReader bsonReader, Type nominalType, Type actualType, IBsonSerializationOptions options)
+        {
+            return _options.Serializer.Deserialize(bsonReader, nominalType, actualType, options);
         }
 
         public bool GetDocumentId(object document, out object id, out Type idNominalType, out IIdGenerator idGenerator)
@@ -41,23 +58,6 @@ namespace MongoDB.Driver.Extensions.EventListeners
         public BsonSerializationInfo GetMemberSerializationInfo(string memberName)
         {
             return _options.Serializer.GetMemberSerializationInfo(memberName);
-        }
-
-        public object Deserialize(BsonReader bsonReader, Type nominalType, Type actualType, IBsonSerializationOptions options)
-        {
-            return _options.Serializer.Deserialize(bsonReader, nominalType, actualType, options);
-        }
-
-        public void Serialize(BsonWriter bsonWriter, Type nominalType, object value, IBsonSerializationOptions options)
-        {
-            if(_options.Context != null)
-            {
-                if(_options.Context.SaveEventListener != null)
-                {
-                    _options.Context.SaveEventListener.OnSave(new DefaultSaveEventArgs(value, this._options.Context.Data));
-                }
-            }
-            _options.Serializer.Serialize(bsonWriter, nominalType, value, options);
         }
     }
 }
