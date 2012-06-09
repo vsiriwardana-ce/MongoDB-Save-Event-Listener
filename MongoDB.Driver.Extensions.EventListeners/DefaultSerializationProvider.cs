@@ -28,10 +28,5 @@ namespace MongoDB.Driver.Extensions.EventListeners
             }
             BsonSerializer.RegisterSerializationProvider(new DefaultSerializationProvider(baseEntityType, dependencyResolver));
         }
-
-        public static void InitializeProvider<TBaseEntityType>(IDependencyResolver dependencyResolver)
-        {
-            InitializeProvider(typeof (TBaseEntityType), dependencyResolver);
-        }
     }
 }
