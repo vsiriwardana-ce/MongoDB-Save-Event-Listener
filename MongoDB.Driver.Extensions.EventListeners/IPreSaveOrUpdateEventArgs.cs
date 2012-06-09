@@ -1,7 +1,7 @@
 ﻿
 namespace MongoDB.Driver.Extensions.EventListeners
 {
-    public interface ISaveEventArgs
+    public interface IPreSaveOrUpdateEventArgs
     {
         object Entity { get; set; }
 

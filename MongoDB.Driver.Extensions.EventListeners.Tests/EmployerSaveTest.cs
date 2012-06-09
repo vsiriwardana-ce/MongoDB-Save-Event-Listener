@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using Autofac;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver.Extensions.EventListeners.Tests.Entities;
 using NUnit.Framework;
 
@@ -13,22 +13,22 @@ namespace MongoDB.Driver.Extensions.EventListeners.Tests
     {
         private MongoCollection<Employer> _employerCollection;
 
+        private IContainer _container = null;
+
         [SetUp]
         public void Setup()
         {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<EventDataLoader>().As<IEventDataLoader>();
+            containerBuilder.RegisterType<DefaultPreSaveEventListener>().As<IPreSaveOrUpdateEventListener>();
+            
+            _container = containerBuilder.Build();
+
             var connectionStringBuilder = new MongoConnectionStringBuilder(ConfigurationManager.ConnectionStrings["MongoDBConnectionString"].ConnectionString);
             var mongoServer = MongoServer.Create(connectionStringBuilder);
             _employerCollection = mongoServer.GetDatabase(connectionStringBuilder.DatabaseName).GetCollection<Employer>(typeof (Employer).Name);
 
-            BsonSerializer.RegisterSerializationProvider(new DefaultSerializationProvider(
-                                                             new UnitTestEventContext()
-                                                                 {
-                                                                     Data = new CurrentContextData()
-                                                                                {
-                                                                                    CurrentUserName = "Test Runner"
-                                                                                },
-                                                                     SaveEventListener = new DefaultSaveEventListener()
-                                                                 }));
+            DefaultSerializationProvider.InitializeProvider(typeof(IEntity), new DependencyResolver(_container));
         }
 
         [Test]

@@ -5,9 +5,9 @@ using MongoDB.Driver.Extensions.EventListeners.Tests.Entities;
 
 namespace MongoDB.Driver.Extensions.EventListeners.Tests
 {
-    public sealed class DefaultSaveEventListener : ISaveEventListener
+    public sealed class DefaultPreSaveEventListener : IPreSaveOrUpdateEventListener
     {
-        public void OnSave(ISaveEventArgs @event)
+        public void OnPreSave(IPreSaveOrUpdateEventArgs @event)
         {
             if(@event.Entity != null && @event.Data != null)
             {
